@@ -1,0 +1,2 @@
+# enterleague
+Championship simulator.
