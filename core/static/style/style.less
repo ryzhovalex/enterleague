@@ -1,0 +1,83 @@
+// compress: true
+@import "vars";
+
+/* General */
+html {
+	font-size: 15px;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+body { 
+	margin: 0;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1rem;
+	color: rgb(255, 255, 255);
+    background-color: rgb(82, 82, 82);
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+h1, h2, h3, h4, p {
+	margin: 0;
+}
+
+ul {
+	margin: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+.container1600 {
+	width: 1600px;
+	margin: 0 auto;
+}
+
+.container1200 {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.container1000 {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.container800 {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.clearfix:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.nav {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+
+/* Media */
+@media screen and (max-width: 1620px) {
+	.container1600, .container1200, .container1000, .container800 {
+		max-width: 100%;
+	}
+}
+
+
+/* Blocks */
+@import "blocks/header";
+@import "blocks/footer";
