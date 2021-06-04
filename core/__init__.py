@@ -13,8 +13,11 @@ db = SQLAlchemy()
 def create_app():
     # proper init sequence from here: https://stackoverflow.com/a/20749534/14748231
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.abspath(os.getcwd()) + "/sqlite3.db" 
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+
+    # TODO: separate different flask modes with more smarter enabling (maybe via click.command)
+    # source: https://flask.palletsprojects.com/en/2.0.x/api/#flask.Config.from_object
+    from . import config
+    app.config.from_object(config.DevelopmentConfig())
 
     db.init_app(app)
 
