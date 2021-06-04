@@ -29,23 +29,23 @@ def create_app():
     # -- $ flask db migrate
     # -- $ flask db upgrade
 
-    app.cli.add_command(add_test_user)
+    app.cli.add_command(add_test_player)
 
     from .views import home
     app.register_blueprint(home.bp)
 
-    from .models import User, Account, Order, Address
+    from .models import Player
 
     return app
 
 
-@click.command("add-test-user")
+@click.command("add-test-player")
 @with_appcontext
-def add_test_user():
-    from .models import User
-    user = User(name=str(random.randint(-10**6, 10**6)), age=random.randint(5, 80))
-    db.session.add(user)
+def add_test_player():
+    from .models import Player
+    player = Player(firstname="Max", surname="Kudr", age=random.randint(6, 60))
+    db.session.add(player)
     db.session.commit()
-    click.echo("New test user added.")
+    click.echo("New test player added.")
 
 
