@@ -98,7 +98,7 @@ Working process separates into Marathons (1 month) and Sprints (1 week).
 
 - Define instances and their dependencies
 - Create structure (build UML schema with core instances)
-- Organize work environment (repository, directories, tools, etc.)
+- Organize work environment (repository, directories, tools, etc.) -- DONE!
 - Build basic Flask app with database connection and skeleton instances
 
 ##### Sprint 2 - General (2021.06.07 - 2021.06.13)
