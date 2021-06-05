@@ -18,13 +18,16 @@ class Config:
 
 class ProductionConfig(Config):
     DEBUG = False
-    # TODO: set psql connection SQLALCHEMY_DATABASE_URI = ...
+
+    # source: https://stackoverflow.com/questions/23839656/sqlalchemy-no-password-supplied-error
+    SQLALCHEMY_DATABASE_URI = "postgresql:///enterleague-db" 
 
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.abspath(os.getcwd()) + "/sqlite3.db" 
+
 
 
 class TestingConfig(Config):

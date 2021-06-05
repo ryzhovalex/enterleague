@@ -19,6 +19,10 @@ def string(*args, **kwargs):
     return db.String(*args, **kwargs)
 
 
+def boolean(*args, **kwargs):
+    return db.Boolean(*args, **kwargs)
+
+
 def relationship(*args, **kwargs):
     return db.relationship(*args, **kwargs)
 

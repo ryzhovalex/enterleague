@@ -1,3 +1,0 @@
-"""
-    Main simulation program.
-"""
