@@ -37,7 +37,5 @@ def create_app():
     app.register_blueprint(home.bp)
     app.register_blueprint(factory.bp)
 
-    from .models import Player
-
     return app
 
