@@ -29,23 +29,15 @@ def create_app():
     # -- $ flask db migrate
     # -- $ flask db upgrade
 
-    app.cli.add_command(add_test_player)
+    # add commands for testing and db manipulations
+    from .tests import commands # needs to be inside function, not outside, or we get circular import (because of "db = SQLAlchemy()")
+    commands.init_app(app, db)
 
-    from .views import home
+    from .views import home, factory
     app.register_blueprint(home.bp)
+    app.register_blueprint(factory.bp)
 
     from .models import Player
 
     return app
-
-
-@click.command("add-test-player")
-@with_appcontext
-def add_test_player():
-    from .models import Player
-    player = Player(firstname="Max", surname="Kudr", age=random.randint(6, 60))
-    db.session.add(player)
-    db.session.commit()
-    click.echo("New test player added.")
-
 

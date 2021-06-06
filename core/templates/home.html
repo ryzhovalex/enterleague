@@ -3,14 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for user in users %}
-            <li>{{ user.name }} -- {{ user.age }}</li>
-            {% if not loop.last %}
-                <hr>
-            {% endif %}
-        {% endfor %}
-    </ul>
+    <p>Hello i'm content.</p>
 {% endblock %}
 
        

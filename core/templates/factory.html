@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Factory{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for player in players %}
+            <li>{{ player.name }} -- {{ player.age }}</li>
+            {% if not loop.last %}
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

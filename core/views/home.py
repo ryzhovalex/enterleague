@@ -9,5 +9,4 @@ bp = Blueprint("home", __name__, url_prefix="/")
 
 @bp.route("/")
 def home():
-    players = Player.query.all()
-    return render_template("home.html", players=players)
+    return render_template("home.html")

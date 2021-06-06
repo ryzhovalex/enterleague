@@ -76,8 +76,8 @@ class Player(model()):
     followers = column(integer(), nullable=False)
     total_goals = column(integer(), nullable=False)
     total_assists = column(integer(), nullable=False)
-    match_history = relationship("MatchHistory", backref="player", lazy=True, uselist=False)
-    transfer_history = relationship("TransferHistory", backref="player", lazy=True, uselist=False)
+    match_history = relationship("PlayerMatchHistory", backref="player", lazy=True, uselist=False)
+    transfer_history = relationship("PlayerTransferHistory", backref="player", lazy=True, uselist=False)
     trophies = relationship("Trophie", secondary=players_trophies_table, backref=backref("players", lazy=True))
     
 
@@ -99,6 +99,7 @@ class Role(model()):
 class Skill(model()):
     __tablename__ = "skill"
     id = column(integer(), primary_key=True)
+    player_id = column(integer(), foreign_key("player.id"), nullable=False)
     name = column(string(80), nullable=False)
     rating = column(integer(), nullable=False)
 
@@ -119,8 +120,8 @@ class Club(model()):
     market_value = column(integer(), nullable=False)
     players = relationship("Player", backref="club", lazy=True)
     trophies = relationship("Trophie", secondary=clubs_trophies_table, lazy="subquery", backref=backref("clubs", lazy=True))
-    match_history = relationship("MatchHistory", backref="club", lazy=True, uselist=False)
-    transfer_history = relationship("TransferHistory", backref="club", lazy=True, uselist=False)
+    match_history = relationship("ClubMatchHistory", backref="club", lazy=True, uselist=False)
+    transfer_history = relationship("ClubTransferHistory", backref="club", lazy=True, uselist=False)
     trainer = column(string(80), nullable=False) # TODO: create class Trainer and other personal of the club with own statistics
     trophies = relationship("Trophie", secondary=clubs_trophies_table, backref=backref("clubs", lazy=True))
 
@@ -132,42 +133,42 @@ class PlayerMatchHistory(model()):
     __tablename__ = "player_match_history"
     id = column(integer(), primary_key=True)
     player_id = column(integer(), foreign_key("player.id"), nullable=False)
-    matches = relationship("Match", secondary=player_match_histories_matches_table, lazy="subquery", backref=backref("players", lazy=True))
+    matches = relationship("Match", secondary=player_match_histories_matches_table, lazy="subquery", backref=backref("player_match_histories", lazy=True))
 
 
 class ClubMatchHistory(model()):
     __tablename__ = "club_match_history"
     id = column(integer(), primary_key=True)
     club_id = column(integer(), foreign_key("club.id"), nullable=False)
-    matches = relationship("Match", secondary=club_match_histories_matches_table, lazy="subquery", backref=backref("clubs", lazy=True))
+    matches = relationship("Match", secondary=club_match_histories_matches_table, lazy="subquery", backref=backref("club_match_histories", lazy=True))
 
 
 class ChampionshipMatchHistory(model()):
     __tablename__ = "championship_match_history"
     id = column(integer(), primary_key=True)
     championship_id = column(integer(), foreign_key("championship.id"), nullable=False)
-    matches = relationship("Championship", secondary=championship_match_histories_matches_table, lazy="subquery", backref=backref("championships", lazy=True))
+    matches = relationship("Match", secondary=championship_match_histories_matches_table, lazy="subquery", backref=backref("championship_match_histories", lazy=True))
 
 
 class PlayerTransferHistory(model()):
     __tablename__ = "player_transfer_history"
     id = column(integer(), primary_key=True)
     player_id = column(integer(), foreign_key("player.id"), nullable=False)
-    transfers = relationship("Transfer", secondary=player_transfer_histories_transfers_table, lazy="subquery", backref=backref("players", lazy=True))
+    transfers = relationship("Transfer", secondary=player_transfer_histories_transfers_table, lazy="subquery", backref=backref("player_transfer_histories", lazy=True))
 
 
 class ClubTransferHistory(model()):
     __tablename__ = "club_transfer_history"
     id = column(integer(), primary_key=True)
-    player_id = column(integer(), foreign_key("player.id"), nullable=False)
-    transfers = relationship("Transfer", secondary=club_transfer_histories_transfers_table, lazy="subquery", backref=backref("clubs", lazy=True))
+    club_id = column(integer(), foreign_key("club.id"), nullable=False)
+    transfers = relationship("Transfer", secondary=club_transfer_histories_transfers_table, lazy="subquery", backref=backref("club_transfer_histories", lazy=True))
 
 
 class SeasonTransferHistory(model()):
     __tablename__ = "season_transfer_history"
     id = column(integer(), primary_key=True)
     season_id = column(integer(), foreign_key("season.id"), nullable=False)
-    transfers = relationship("Transfer", secondary=season_transfer_histories_transfers_table, lazy="subquery", backref=backref("seasons", lazy=True))
+    transfers = relationship("Transfer", secondary=season_transfer_histories_transfers_table, lazy="subquery", backref=backref("season_transfer_histories", lazy=True))
 
 
 class Match(model()):
@@ -194,10 +195,11 @@ class Trophie(model()):
 class Championship(model()):
     __tablename__ = "championship"
     id = column(integer(), primary_key=True)
+    season_id = column(integer(), foreign_key("season.id"), nullable=False)
     name = column(string(150), nullable=False)
     type = relationship("ChampionshipType", secondary=championships_types_table, lazy="subquery", backref=backref("championships", lazy=True))
     country_id = column(integer(), foreign_key("country.id"), nullable=False)
-    standings = relationship("StandingsTeam", backref="championship", lazy=True)
+    standings = relationship("StandingTeam", backref="championship", lazy=True)
     trophie = relationship("Trophie", backref="championship", lazy=True, uselist=False)
 
 
@@ -207,8 +209,8 @@ class ChampionshipType(model()):
     name = column(string(80), nullable=False)
 
 
-class StandingsTeam(model()):
-    __tablename__ = "standings_team"
+class StandingTeam(model()):
+    __tablename__ = "standing_team"
     id = column(integer(), primary_key=True)
     championship_id = column(integer(), foreign_key("championship.id"), nullable=False)
     club_id = column(integer(), foreign_key("club.id"), nullable=False)
