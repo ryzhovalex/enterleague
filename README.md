@@ -104,6 +104,7 @@ Working process separates into Marathons (1 month) and Sprints (1 week).
 ##### Sprint 2 - General (2021.06.07 - 2021.06.13)
 
 - Build models of general instances
+- Implement general generation engine (players, clubs, etc. generators)
 - Implement general simulation engine (decision algorithms, event generator, etc.)
 
 ##### Sprint 3 - Extension (2021.06.14 - 2021.06.20)
