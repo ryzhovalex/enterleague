@@ -94,12 +94,12 @@ Working process separates into Marathons (1 month) and Sprints (1 week).
 
 #### Marathon I - App Core (2021.05.31 - 2021.06.27)
 
-##### Sprint 1 - Base (2021.05.31 - 2021.06.06)
+##### Sprint 1 - Base (2021.05.31 - 2021.06.06) -- COMPLETED!
 
-- Define instances and their dependencies
-- Create structure (build UML schema with core instances)
+- Define instances and their dependencies -- DONE!
+- Create structure (build UML schema with core instances) -- DONE!
 - Organize work environment (repository, directories, tools, etc.) -- DONE!
-- Build basic Flask app with database connection and skeleton instances
+- Build basic Flask app with database connection and skeleton instances -- DONE!
 
 ##### Sprint 2 - General (2021.06.07 - 2021.06.13)
 
