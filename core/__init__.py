@@ -33,6 +33,7 @@ def create_app():
     from .tests import commands # needs to be inside function, not outside, or we get circular import (because of "db = SQLAlchemy()")
     commands.init_app(app, db)
 
+    # chain to blueprints
     from .views import home, factory
     app.register_blueprint(home.bp)
     app.register_blueprint(factory.bp)
