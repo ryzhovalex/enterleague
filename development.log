@@ -1,1 +1,0 @@
-2021.06.13	Manipulation with database should be performed only through data raw files, because database may be cleaned and all initial and other data may be lost but not in data folders (in csv, txt, etc. formats)
