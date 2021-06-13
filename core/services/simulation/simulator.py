@@ -1,3 +1,0 @@
-"""
-Simulation core engine.
-"""

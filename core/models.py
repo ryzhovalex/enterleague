@@ -84,7 +84,8 @@ class Player(model()):
 class Country(model()):
     __tablename__ = "country"
     id = column(integer(), primary_key=True)
-    name = column(string(80), nullable=False)
+    name = column(string(80), nullable=False, unique=True)
+    prototype = column(string(), nullable=False)
     players = relationship("Player", backref="country", lazy=True)
     clubs = relationship("Club", backref="country", lazy=True)
     championships = relationship("Championship", backref="country", lazy=True)
