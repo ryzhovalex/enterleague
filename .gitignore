@@ -1,6 +1,7 @@
 *.db
 *.log
 migrations/
+raw/
 
 
 # Byte-compiled / optimized / DLL files
