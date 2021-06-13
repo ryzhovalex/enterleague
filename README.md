@@ -14,29 +14,37 @@ Working process separated into Sprints (1 week), each with certain end-goal and 
 🔶 - main purpose of a sprint   
 🏁 - sprint has finished     
 ⭐ - current sprint      
-✅ - task done   
+✔️ - task done   
 ⚠️ - task has done, but some planned functions have been discarded   
 🏃️ - work on task is in progress   
 ⏲️ - task has been moved to next sprint because of deadline breaking      
 ❌ - task has been rejected because of changed conditions   
 
+---
+
+### ⭐ Sprint 3 - Generation II (2021.06.14 - 2021.06.20)
+
+&nbsp;&nbsp;&nbsp;&nbsp;*🔶 Finish of implementation of general generation functionality*
+
+- Implement general generation engine (players, clubs, etc. generators)
+- Create factory basic view for testing generation results
+
+### 🏁 Sprint 2 - Generation (2021.06.07 - 2021.06.13)
+
+&nbsp;&nbsp;&nbsp;&nbsp;*🔶 Make first steps in data collection and generation*
+
+- ✔ Build models of general instances
+- ✔ Collect raw data for further migrations
+- ⏲️ Implement general generation engine (players, clubs, etc. generators)
 
 ### 🏁 Sprint 1 - Base (2021.05.31 - 2021.06.06)
 
 &nbsp;&nbsp;&nbsp;&nbsp;*🔶 Organize basic platform for future development*
 
-- ✅ Define instances and their dependencies
-- ✅ Create structure (build UML schema with core instances)
-- ✅ Organize work environment (repository, directories, tools, etc.)
-- ✅ Build basic Flask app with database connection and skeleton instances
-
-### ⭐ Sprint 2 - Generation (2021.06.07 - 2021.06.13)
-
-&nbsp;&nbsp;&nbsp;&nbsp;*🔶 Make first steps in data collection and generation*
-
-- ✅ Build models of general instances
-- ✅ Collect raw data for further migrations
-- 🏃 Implement general generation engine (players, clubs, etc. generators)
+- ✔️ Define instances and their dependencies
+- ✔ Create structure (build UML schema with core instances)
+- ✔ Organize work environment (repository, directories, tools, etc.)
+- ✔ Build basic Flask app with database connection and skeleton instances
 
 ---
 
