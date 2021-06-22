@@ -2,7 +2,7 @@ EnterLeague
 ===
 
 EnterLeague project has designed with goal of building living championship simulation with access from third-view user to watch after all actions within it.
-"Living championship simulation" - this is complex set of championships, clubs and players and matches between them. All this are united in season, which define simulation progression. Main goal for this stage is to build this simulation based on football game.
+"Living championship simulation" - this is complex set of championships, clubs and players and matches between them. All this are united in season, which define simulation progression. Main goal for this stage is to build this simulation based on volleyball game.
 Special feature is possibility to have an access to own player and control his parameters with functions of changing. All matches, where controlled player has a partition also can be configured and controlled.
 
 ---
