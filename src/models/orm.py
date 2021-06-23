@@ -2,7 +2,7 @@
 Database model()s logic.
 """
 
-from .model_aliases import *
+from .tools.model_aliases import *
 
 
 # source: https://flask-sqlalchemy.palletsprojects.com/en/2.x/model()s/
@@ -76,6 +76,7 @@ class Player(model()):
     followers = column(integer(), nullable=False)
     total_goals = column(integer(), nullable=False)
     total_assists = column(integer(), nullable=False)
+    total_blocks = column(integer(), nullable=False) # means all blocks on the net (including not leaded to a goal)
     match_history = relationship("PlayerMatchHistory", backref="player", lazy=True, uselist=False)
     transfer_history = relationship("PlayerTransferHistory", backref="player", lazy=True, uselist=False)
     trophies = relationship("Trophie", secondary=players_trophies_table, backref=backref("players", lazy=True))
@@ -173,12 +174,25 @@ class SeasonTransferHistory(model()):
 
 
 class Match(model()):
+    """ 
+    Match contains several sets. 
+    Note that the match' score counts in sets, and now always best-of-5, i.e clubs plays until 3 winned sets of one of them. 
+    """
     __tablename__ = "match"
     id = column(integer(), primary_key=True)
     ended = column(boolean(), default=False)
     clubs = relationship("Club", secondary=clubs_matches_table, lazy="subquery", backref=backref("matches", lazy=True))
     score = column(string(80), default="0-0") # club with index 0 stays left in score view
-    time_now_minutes = column(integer(), default=0)
+    sets = relationship("Set", backref="match", lazy=True)
+
+
+class Set(model()):
+    """ Set now always lasts to 25 scored points of any club """
+    __tablename__ = "set"
+    id = column(integer(), primary_key=True)
+    match_id = column(integer(), foreign_key("match.id"), nullable=False)
+    ended = column(boolean(), default=False)
+    score = column(string(80), default="0-0") 
 
 
 class Transfer(model()):
@@ -228,14 +242,14 @@ class StandingTeam(model()):
 class Season(model()):
     __tablename__ = "season"
     id = column(integer(), primary_key=True)
-    simulator_id = column(integer(), foreign_key("simulator.id"), nullable=False)
+    simulation_id = column(integer(), foreign_key("simulation.id"), nullable=False)
     championships = relationship("Championship", backref="season", lazy=True)
 
 
-class Simulator(model()):
-    __tablename__ = "simulator"
+class Simulation(model()):
+    __tablename__ = "simulation"
     id = column(integer(), primary_key=True)
-    seasons = relationship("Season", backref="simulator", lazy=True)
+    seasons = relationship("Season", backref="simulation", lazy=True)
 
 
     

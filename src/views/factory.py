@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from ..models import Player
+from ..models.orm import Player
 
 
 bp = Blueprint("factory", __name__, url_prefix="/factory")

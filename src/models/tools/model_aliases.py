@@ -1,6 +1,6 @@
 """ Program with aliases for more comfortable and shorter model building. """
 
-from . import db
+from ...controllers.app import db
 
 
 def model():
