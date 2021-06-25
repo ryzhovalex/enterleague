@@ -1,9 +1,9 @@
 import os
 import click
 import random
-from flask import Flask, g
-from flask_sqlalchemy import SQLAlchemy
+
 from flask.cli import with_appcontext
+
 from ..models.orm import Player
 
 
