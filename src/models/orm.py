@@ -57,6 +57,14 @@ championships_types_table = table("championships_types",
 )
 
 
+class NamesCollection(model()):
+    __tablename__ = "names_collection"
+    id = column(integer(), primary_key=True)
+    name_type = column(string(25), nullable=False) # 'first' or 'sur'
+    name = column(string(80), nullable=False)
+    proto_countries = column(text())
+
+
 class Player(model()):
     __tablename__ = "player"
     __table_args__ = (

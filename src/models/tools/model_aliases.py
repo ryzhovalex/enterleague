@@ -15,12 +15,12 @@ def integer(*args, **kwargs):
     return db.Integer(*args, **kwargs)
 
 
-def string(*args, **kwargs):
-    return db.String(*args, **kwargs)
-
-
 def boolean(*args, **kwargs):
     return db.Boolean(*args, **kwargs)
+
+
+def string(*args, **kwargs):
+    return db.String(*args, **kwargs)
 
 
 def relationship(*args, **kwargs):
@@ -42,3 +42,10 @@ def table(*args, **kwargs):
 def check_constraint(*args, **kwargs):
     return db.CheckConstraint(*args, **kwargs)
 
+
+def text(*args, **kwargs):
+    return db.Text(*args, **kwargs)
+
+
+def dtime(*args, **kwargs): # name 'dtime' used because we may have conflicts with python origin 'datetime'
+    return db.DateTime(*args, **kwargs)
