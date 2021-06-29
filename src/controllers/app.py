@@ -59,8 +59,8 @@ def migrate_initial_instances():
     click.echo("...Done!")
 
     click.echo("-" * 20)
-    click.echo("Migration of something...")
-    # template
+    click.echo("Migration of championships...")
+    _migrate_championships()
     click.echo("...Done!")
 
     click.echo("=" * 20)
@@ -69,7 +69,7 @@ def migrate_initial_instances():
 
 
 def _migrate_countries():
-    with open(_make_rel_path("data/countries.csv"), "r") as file:
+    with open(_make_rel_path("../data/countries.csv"), "r") as file:
         csv_file = csv.DictReader(file, delimiter=";")	
         countries = []
         for row in csv_file:
@@ -77,6 +77,27 @@ def _migrate_countries():
             country = orm.Country(name=row["name"], prototype=row["prototype"])
             db.session.add(country)
             print("Country %s with prototype %s added!" % (country["name"], country["prototype"]))
+
+
+def _migrate_championships():
+    # create standard 5 home leagues for all countries
+    countries = orm.Country.query.all()
+    for country in countries:
+        for x in range(1, 6):
+            championship = orm.ChampionshipsCollection(name=f"{country.name} Division {x}", country_id=country.id)
+
+    # add all other championships from a csv file
+    # ...
+
+
+def _migrate_clubs():
+    # migrate all clubs from a csv file
+    with open(_make_rel_path("../data/clubs.csv"), "r") as file:
+        csv_file = csv.DictReader(file, delimiter=";")
+        clubs = []
+        for row in csv_file:
+            country = orm.Country.query.filter_by(name=row["country"]).first()
+            club = orm.Club(name=row["name"], country_id=country.id)
 
 
 def _make_rel_path(path: str) -> str:

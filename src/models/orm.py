@@ -60,9 +60,18 @@ championships_types_table = table("championships_types",
 class NamesCollection(model()):
     __tablename__ = "names_collection"
     id = column(integer(), primary_key=True)
-    name_type = column(string(25), nullable=False) # 'first' or 'sur'
-    name = column(string(80), nullable=False)
+    name_type = column(string(25)) # 'first' or 'sur'
+    name = column(string(80))
     proto_countries = column(text())
+
+
+class ChampionshipsCollection(model()):
+    __tablename__ = "championship_collection"
+    id = column(integer(), primary_key=True)
+    name = column(string(80))
+    is_national = column(boolean(), default=False) # for national teams or not
+    is_league = column(boolean(), default=False) # is part of country' division or not
+    country_id = column(integer(), foreign_key("country.id"), nullable=False) # every Championship has only one country 
 
 
 class Player(model()):
@@ -97,7 +106,7 @@ class Country(model()):
     prototype = column(string(), nullable=False)
     players = relationship("Player", backref="country", lazy=True)
     clubs = relationship("Club", backref="country", lazy=True)
-    championships = relationship("Championship", backref="country", lazy=True)
+    championships_collection = relationship("ChampionshipsCollection", backref="country", lazy=True)
 
 
 class Role(model()):
@@ -123,17 +132,17 @@ class Perk(model()):
 class Club(model()):
     __tablename__ = "club"
     id = column(integer(), primary_key=True)
-    name = column(string(80), nullable=False)
-    country_id = column(integer(), foreign_key("country.id"), nullable=False) 
-    rating = column(integer(), nullable=False)
-    budget = column(integer(), nullable=False)
-    market_value = column(integer(), nullable=False)
+    name = column(string(80), nullable=False, unique=True)
+    country_id = column(integer(), foreign_key("country.id")) 
+    country_division = column(integer()) # number of division of home country where club stays at the moment
+    rating = column(integer())
+    budget = column(integer())
+    market_value = column(integer())
     players = relationship("Player", backref="club", lazy=True)
     trophies = relationship("Trophie", secondary=clubs_trophies_table, lazy="subquery", backref=backref("clubs", lazy=True))
     match_history = relationship("ClubMatchHistory", backref="club", lazy=True, uselist=False)
     transfer_history = relationship("ClubTransferHistory", backref="club", lazy=True, uselist=False)
-    trainer = column(string(80), nullable=False) # TODO: create class Trainer and other personal of the club with own statistics
-    trophies = relationship("Trophie", secondary=clubs_trophies_table, backref=backref("clubs", lazy=True))
+    trainer = column(string(80)) # TODO: create class Trainer and other personal of the club with own statistics
 
     # all positions in tables where club participates
     standing_teams = relationship("StandingTeam", backref="club", lazy=True)
@@ -218,15 +227,20 @@ class Trophie(model()):
 class Championship(model()):
     __tablename__ = "championship"
     id = column(integer(), primary_key=True)
-    season_id = column(integer(), foreign_key("season.id"), nullable=False)
-    name = column(string(150), nullable=False)
+    season_id = column(integer(), foreign_key("season.id"))
+    name = column(string(150))
     type = relationship("ChampionshipType", secondary=championships_types_table, lazy="subquery", backref=backref("championships", lazy=True))
-    country_id = column(integer(), foreign_key("country.id"), nullable=False)
     standings = relationship("StandingTeam", backref="championship", lazy=True)
     trophie = relationship("Trophie", backref="championship", lazy=True, uselist=False)
+    is_league = column(boolean(), default=False) # True if part of a league (country' division)
 
 
 class ChampionshipType(model()):
+    """ 
+    Options:
+    - playoff
+    - table
+    """
     __tablename__ = "championship_type"
     id = column(integer(), primary_key=True)
     name = column(string(80), nullable=False)
@@ -258,6 +272,9 @@ class Simulation(model()):
     __tablename__ = "simulation"
     id = column(integer(), primary_key=True)
     seasons = relationship("Season", backref="simulation", lazy=True)
+
+
+
 
 
     
