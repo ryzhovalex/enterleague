@@ -8,7 +8,7 @@ __version__ = "0.5.0-proto.5"
 
 # TODO: add to setup auto FLASK_APP pointer and additional required operations
 
-from src.controllers.app import *
+from src.controllers.app import create_app
 
 
 if __name__ == "__main__":

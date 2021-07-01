@@ -3,14 +3,15 @@
 import os
 import csv
 
-from ..models import orm
-from ..tools import make_rel_path
+from .db import Database
+from .orm import ChampionshipsCollection, Country, Player, Club
+from ..tools.data_manipulator import make_rel_path
 
 
 class Migrator:
     # TODO: add check if initial migration has been performed already with checking appropriate database info
-    def __init__(self, db):
-        self.db = db
+    def __init__(self):
+        self.db = Database()
 
     def migrate_countries(self):
         with open(make_rel_path("../data/countries.csv"), "r") as file:
@@ -18,16 +19,16 @@ class Migrator:
             countries = []
             for row in csv_file:
                 assert row["prototype"]
-                country = orm.Country(name=row["name"], prototype=row["prototype"])
+                country = Country(name=row["name"], prototype=row["prototype"])
                 self.db.session.add(country)
                 print("Country %s with prototype %s added!" % (country["name"], country["prototype"]))
 
     def migrate_championships(self):
         # create standard 5 home leagues for all countries
-        countries = orm.Country.query.all()
+        countries = Country.query.all()
         for country in countries:
             for x in range(1, 6):
-                championship = orm.ChampionshipsCollection(name=f"{country.name} Division {x}", country_id=country.id)
+                championship = ChampionshipsCollection(name=f"{country.name} Division {x}", country_id=country.id)
 
         # add all other championships from a csv file
         # ...
@@ -38,7 +39,7 @@ class Migrator:
             csv_file = csv.DictReader(file, delimiter=";")
             clubs = []
             for row in csv_file:
-                country = orm.Country.query.filter_by(name=row["country"]).first()
-                club = orm.Club(name=row["name"], country_id=country.id)
+                country = Country.query.filter_by(name=row["country"]).first()
+                club = Club(name=row["name"], country_id=country.id)
 
         
