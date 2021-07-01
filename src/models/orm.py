@@ -2,7 +2,7 @@
 Database model()s logic.
 """
 
-from .tools.model_aliases import *
+from ..tools.model_aliases import *
 
 
 # source: https://flask-sqlalchemy.palletsprojects.com/en/2.x/model()s/

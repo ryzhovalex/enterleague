@@ -25,6 +25,7 @@ def generate_player(
     """ Generate a player with given parameters and returns him. 
     If any of the parameter not given, use random one. """
     if not firstname:
+        pass
         # make here query from db table
 
     # for future to query countries for picking

@@ -1,5 +1,7 @@
-from bs4 import BeautifulSoup
+import os
 import csv
+
+from bs4 import BeautifulSoup
  
 
 def check_no_align(tag):
@@ -52,6 +54,11 @@ def read_csv():
 
 			for row in csvf:
 				f2.write(row["name"] + ";USA,UK,Ireland,Scotland,Australia\n")
+
+
+def make_rel_path(path: str) -> str:
+    script_dir = os.path.dirname(__file__)
+    return os.path.join(script_dir, path)
 
 
 if __name__ == "__main__":
