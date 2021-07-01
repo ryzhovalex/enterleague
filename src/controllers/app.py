@@ -41,19 +41,5 @@ def create_app():
 @with_appcontext
 def migrate_initial_instances():
     migrator = Migrator()
-
-    click.echo("Migration of initial instances has been started... it may took some time...")
-    click.echo("<>" * 10)
-
-    click.echo("Migration of countries...")
-    migrator.migrate_countries()
-    click.echo("...Done!")
-
-    click.echo("-" * 20)
-    click.echo("Migration of championships...")
-    migrator.migrate_championships()
-    click.echo("...Done!")
-
-    click.echo("=" * 20)
-    click.echo("Migration completed!")
+    migrator.perform_initial_migration()
 
