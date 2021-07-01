@@ -2,7 +2,6 @@ import click
 
 from flask import Flask, g
 from flask.cli import with_appcontext
-from flask_migrate import Migrate
 
 from ..models.db import Database
 from ..models.migrator import Migrator
@@ -14,25 +13,21 @@ def create_app():
     # proper init sequence from here: https://stackoverflow.com/a/20749534/14748231
     app = Flask(__name__)
     db = Database()
-    db.init_app(app)
 
     # TODO: separate different flask modes with more smarter enabling (maybe via click.command)
     # source: https://flask.palletsprojects.com/en/2.0.x/api/#flask.Config.from_object
     app.config.from_object(config.DevelopmentConfig())
 
-    # source: https://github.com/miguelgrinberg/flask-migrate
-    migrate = Migrate(app, db.get())
-    # if first time initialization:
-    # -- $ flask db init
-    # after each change at models:
-    # -- $ flask db migrate
-    # -- $ flask db upgrade
+    db.init_app(app)
+    db.migrate(app)
 
     # chain to blueprints
     app.register_blueprint(home.bp)
     app.register_blueprint(factory.bp)
 
     app.cli.add_command(migrate_initial_instances)
+
+    from ..models.orm import Player
 
     return app
 

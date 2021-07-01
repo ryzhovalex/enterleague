@@ -6,6 +6,7 @@ from .db import Database
 
 
 db = Database().get()
+print(db)
 
 
 def model():
